@@ -1,4 +1,4 @@
-# React App (ft. Redux & Router v3)
+# React App (ft. Redux & Router v4)
 
 
 ## License
