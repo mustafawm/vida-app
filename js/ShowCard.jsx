@@ -1,10 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { shape, string } from 'prop-types';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  width: 32%;
+  border: 2px solid #333;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  padding-right: 10px;
+  overflow: hidden;
+`;
+
+const Image = styled.img`
+  width: 46%;
+  float: left;
+  margin-right: 10px;
+`;
 
 const ShowCard = ({ show }) => (
-  <div className="show-card">
-    <img
-      alt={`${show.title} show poster`}
+  <Wrapper>
+    <Image
+      alt={`${show.title} - show poster`}
       src={`/public/img/posters/${show.poster}`}
     />
     <div>
@@ -12,12 +28,16 @@ const ShowCard = ({ show }) => (
       <h4>({show.year})</h4>
       <p>{show.description}</p>
     </div>
-  </div>
+  </Wrapper>
 );
 
 ShowCard.propTypes = {
-  show: PropTypes.object
-}
-
+  show: shape({
+    poster: string.isRequired,
+    title: string.isRequired,
+    year: string.isRequired,
+    description: string.isRequired
+  }).isRequired
+};
 
 export default ShowCard;
