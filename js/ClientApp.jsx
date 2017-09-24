@@ -1,17 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { HashRouter, Route } from 'react-router-dom';
 
-import Landing from './Landing';
-import Search from './Search';
+import App from './App';
 
-const App = () => (
-  <HashRouter>
-    <div className="app">
-      <Route exact path="/" component={Landing} />
-      <Route exact path="/search" component={Search} />
-    </div>
-  </HashRouter>
-);
+const renderApp = () => {
+  render(<App />, document.getElementById('app'));
+};
 
-render(<App />, document.getElementById('app'));
+renderApp(); // initial render
+
+// HMR -- when App changes, rerender the whole thing
+if (module.hot) {
+  module.hot.accept(App, () => {
+    renderApp();
+  });
+}

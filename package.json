@@ -10,7 +10,7 @@
     "test:update": "jest -u",
     "test:coverage": "jest --coverage"
   },
-  "jest" :{
+  "jest": {
     "snapshotSerializers": [
       "jest-serializer-enzyme"
     ]
