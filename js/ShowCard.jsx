@@ -1,6 +1,7 @@
 import React from 'react';
-import { shape, string } from 'prop-types';
 import styled from 'styled-components';
+import { SHOW, DEFAULT_SHOW} from './TYPES';
+
 
 const Wrapper = styled.div`
   width: 32%;
@@ -31,13 +32,12 @@ const ShowCard = ({ show }) => (
   </Wrapper>
 );
 
+ShowCard.defaultProps = {
+  show: DEFAULT_SHOW
+};
+
 ShowCard.propTypes = {
-  show: shape({
-    poster: string.isRequired,
-    title: string.isRequired,
-    year: string.isRequired,
-    description: string.isRequired
-  }).isRequired
+  show: SHOW.isRequired
 };
 
 export default ShowCard;

@@ -1,8 +1,9 @@
 import React from 'react';
-import preload from '../data.json';
+import { SHOWS, DEFAULT_SHOWS } from './TYPES';
+import Header from './Header';
 import ShowCard from './ShowCard';
 
-export default class Search extends React.Component {
+class Search extends React.Component {
   state = {
     searchTerm: ''
   };
@@ -10,28 +11,37 @@ export default class Search extends React.Component {
   onSearchTermChange = ({ target: { value } }) => this.setState({ searchTerm: value });
 
   filteredShows = () =>
-    preload.shows.filter(show =>
-      `${show.title} ${show.description}`
-        .toLowerCase()
-        .indexOf(this.state.searchTerm.toLowerCase()) !== -1
+    this.props.shows.filter(
+      show =>
+        `${show.title} ${show.description}`
+          .toLowerCase()
+          .indexOf(this.state.searchTerm.toLowerCase()) !== -1
     );
 
   render() {
     return (
       <div className="search">
-        <header>
-          <h1>VidApp</h1>
-          <input
-            value={this.state.searchTerm}
-            onChange={this.onSearchTermChange}
-            placeholder="Search..."
-          />
-        </header>
-        {/* <pre><code>{JSON.stringify(preload, null, 4)}</code></pre> */}
+        <Header
+          showSearch
+          searchTerm={this.state.searchTerm}
+          handleSearchTermChange={this.onSearchTermChange}
+        />
         <div>
-          {this.filteredShows().map(show => <ShowCard show={show} key={show.imdbID} />)}
+          {this.filteredShows().map(show =>
+            <ShowCard show={show} key={show.imdbID} />
+          )}
         </div>
       </div>
     );
   }
 }
+
+Search.propTypes = {
+  shows: SHOWS
+};
+
+Search.defaultProps = {
+  shows: DEFAULT_SHOWS
+};
+
+export default Search;
