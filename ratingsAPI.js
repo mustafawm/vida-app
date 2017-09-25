@@ -15,7 +15,7 @@ app.get('/:id', (req, res) => {
   const show = ratedShows.find(item => item.imdbID === req.params.id);
   if (show) {
     console.log(show.title);
-    setTimeout(() => res.json(show), Math.floor(Math.random() * 5000));
+    setTimeout(() => res.json(show), Math.floor(Math.random() * 3000));
   } else {
     console.log(404, req.params.id);
     res.status(404).json({ error: 'show not found' });

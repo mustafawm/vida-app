@@ -1,7 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-
+// import Perf from 'react-addons-perf';
 import App from './App';
+
+// window.Perf = Perf;
+// Perf.start();
+// stop(); and printWasted(); in console later to check performance
 
 const renderApp = () => {
   render(<App />, document.getElementById('app'));
