@@ -1,43 +1,47 @@
 import React from "react";
-import axios from "axios";
+import { connect } from 'react-redux';
+import { func, string } from 'prop-types';
 import Header from "./Header";
 import Spinner from "./Spinner";
 import { SHOW, DEFAULT_SHOW } from "./TYPES";
+import { getShowDetails } from './actionCreators';
+
+const mapStateToProps = ({ apiData }, ownProps) => {
+  const data = apiData[ownProps.show.imdbID] || {};
+  return { rating: data.rating || '' };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  getShowDetails() {
+    return dispatch(getShowDetails(ownProps.show.imdbID));
+  }
+});
 
 class Details extends React.Component {
-  state = {
-    apiData: { rating: "" }
-  };
 
   componentDidMount() {
-    axios.get(`http://localhost:3000/${this.props.show.imdbID}`)
-      .then( ({ data: { rating } }) => {
-        this.setState({ apiData: { rating } });
-      })
+    if (!this.props.show.rating) {
+      this.props.getShowDetails();
+    }
   }
 
-
   render() {
+    const { rating } = this.props;
     const { title, description, year, poster, trailer } = this.props.show;
-    const { apiData: { rating } } = this.state;
 
-    const ratingComponent = rating ? <h3>{rating}</h3> : <Spinner />
+    const ratingComponent = rating ? <h3>{rating}</h3> : <Spinner />;
 
     return (
       <div className="details">
         <Header />
-        {/* <pre><code>{JSON.stringify(props, null, 4)}</code></pre> */}
         <section>
           <h1>{title}</h1>
           <h2>{year}</h2>
-
           {ratingComponent}
-
           <img
             alt={`poster for ${title}`}
             src={`/public/img/posters/${poster}`}
           />
-
           <p> {description} </p>
         </section>
         <div>
@@ -53,12 +57,17 @@ class Details extends React.Component {
   }
 }
 
+
+// props stuff
 Details.defaultProps = {
-  show: DEFAULT_SHOW
+  show: DEFAULT_SHOW,
+  rating: ''
 };
 
 Details.propTypes = {
-  show: SHOW.isRequired
+  show: SHOW.isRequired,
+  rating: string,
+  getShowDetails: func.isRequired
 };
 
-export default Details;
+export default connect(mapStateToProps, mapDispatchToProps)(Details);

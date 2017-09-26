@@ -1,32 +1,40 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bool, func, string } from 'prop-types';
+import { setSearchTerm } from './actionCreators';
 
-const Header = props => (
+const mapStateToProps = ({ searchTerm }) => ({ searchTerm });
+const mapDispatchToProps = dispatch => ({
+  onSearchTermChange(value) {
+    dispatch(setSearchTerm(value));
+  }
+});
+
+const Header = ({ showSearch, searchTerm, onSearchTermChange }) => (
   <header>
-    <h1>
-      <Link to="/"> VidApp </Link>
-    </h1>
-    { props.showSearch ?
+    <h1> <Link to="/"> VidApp </Link> </h1>
+    { showSearch ?
       <input
         placeholder="Search"
-        value={props.searchTerm}
-        onChange={props.handleSearchTermChange}
+        value={searchTerm}
+        onChange={({ target: { value } }) => onSearchTermChange(value)}
       />
     : <h2> <Link to="/search"> Back to Search</Link> </h2> }
   </header>
 );
 
+
+// props stuff
 Header.defaultProps = {
   showSearch: false,
-  handleSearchTermChange: () => {},
   searchTerm: ''
 };
 
 Header.propTypes = {
   showSearch: bool,
-  handleSearchTermChange: func,
-  searchTerm: string
+  searchTerm: string,
+  onSearchTermChange: func.isRequired
 }
 
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

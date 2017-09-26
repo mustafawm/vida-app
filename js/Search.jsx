@@ -1,47 +1,37 @@
 import React from 'react';
-import { SHOWS, DEFAULT_SHOWS } from './TYPES';
+import { string } from 'prop-types';
+import { connect } from 'react-redux';
 import Header from './Header';
 import ShowCard from './ShowCard';
+import { SHOWS, DEFAULT_SHOWS } from './TYPES';
 
-class Search extends React.Component {
-  state = {
-    searchTerm: ''
-  };
+const mapStateToProps = ({ searchTerm }) => ({ searchTerm })
 
-  onSearchTermChange = ({ target: { value } }) => this.setState({ searchTerm: value });
-
-  filteredShows = () =>
-    this.props.shows.filter(
-      show =>
-        `${show.title} ${show.description}`
-          .toLowerCase()
-          .indexOf(this.state.searchTerm.toLowerCase()) !== -1
-    );
-
-  render() {
-    return (
-      <div className="search">
-        <Header
-          showSearch
-          searchTerm={this.state.searchTerm}
-          handleSearchTermChange={this.onSearchTermChange}
-        />
-        <div>
-          {this.filteredShows().map(show =>
-            <ShowCard show={show} key={show.imdbID} />
-          )}
-        </div>
-      </div>
-    );
-  }
+function filteredShows(shows, searchTerm) {
+  return shows.filter( show =>
+    `${show.title} ${show.description}`.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+  );
 }
 
+const Search = ({ shows, searchTerm }) => (
+  <div className="search">
+    <Header showSearch />
+    <div>
+      { filteredShows(shows, searchTerm).map(show => <ShowCard show={show} key={show.imdbID} /> )}
+    </div>
+  </div>
+);
+
+
+// props stuff
 Search.propTypes = {
-  shows: SHOWS
+  shows: SHOWS,
+  searchTerm: string
 };
 
 Search.defaultProps = {
-  shows: DEFAULT_SHOWS
+  shows: DEFAULT_SHOWS,
+  searchTerm: ''
 };
 
-export default Search;
+export default connect(mapStateToProps)(Search);

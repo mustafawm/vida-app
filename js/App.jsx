@@ -2,10 +2,10 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import store from './store';
-import preload from '../data.json';
-import Landing from './Landing';
 import Search from './Search';
 import Details from './Details';
+import Landing from './Landing';
+import preload from '../data.json';
 
 const Four0Four = () => <h1>Error 404: not found</h1>;
 
