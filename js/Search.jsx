@@ -34,4 +34,6 @@ Search.defaultProps = {
   searchTerm: ''
 };
 
+
+export const UnwrappedSearch = Search; // for testing purposes
 export default connect(mapStateToProps)(Search);

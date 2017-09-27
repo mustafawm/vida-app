@@ -31,7 +31,7 @@ class ShowCard extends React.Component {
     const { show } = this.props
 
     return (
-      <Wrapper to={`/details/${show.imdbID}`}>
+      <Wrapper className='show-card' to={`/details/${show.imdbID}`}>
         <Image
           alt={`${show.title} - show poster`}
           src={`/public/img/posters/${show.poster}`}
