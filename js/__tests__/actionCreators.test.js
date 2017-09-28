@@ -1,6 +1,7 @@
 import moxios from 'moxios';
 import { setSearchTerm, setApiData, getShowDetails } from '../actionCreators';
 
+const port = process.env.API_SERVER;
 const homeLand = {
   title: 'Homeland',
   year: '2011–',
@@ -35,7 +36,7 @@ test('getShowDetails', done => {
           response: homeLand
         })
         .then(() => {
-          expect(request.url).toEqual(`http://localhost:3000/${homeLand.imdbID}`);
+          expect(request.url).toEqual(`http://localhost:${port}/${homeLand.imdbID}`);
           expect(dispatchMock).toBeCalledWith(setApiData(homeLand)); // it's crucial to test setApiData on its own BEFORE using it elsewhere to make sure it won't cause any issues to others that depend on it (i.e. this test)
 
           done(); // test is done, return now

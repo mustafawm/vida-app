@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   context: __dirname,
@@ -36,7 +37,11 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
+    new webpack.NamedModulesPlugin(),
+    new Dotenv({
+      path: './.env', // Path to .env file (this is the default)
+      safe: true // load .env.example (defaults to "false" which does not use dotenv-safe)
+    })
   ],
 
   resolve: {
