@@ -6,6 +6,7 @@ const fs = require('fs');
 const _ = require('lodash');
 const React = require('react');
 const express = require('express');
+const compression = require('compression');
 const ReactRouter = require('react-router-dom'); // eslint-disable-line
 const ReactDOMServer = require('react-dom/server');
 
@@ -18,6 +19,7 @@ const template = _.template(baseTemplate); // template is a func, will pass it <
 
 const server = express();
 
+server.use(compression());
 server.use('/public', express.static('./public'));
 
 server.use((req, res) => {

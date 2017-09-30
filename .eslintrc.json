@@ -15,15 +15,15 @@
     "no-unused-vars": "warn",
     "constructor-super": "warn",
     "valid-typeof": "warn",
+    "import/prefer-default-export": 0,
     "react/prop-types": [
       "warn",
       {
         "ignore": ["match"]
       }
     ],
-    "import/prefer-default-export": 0
+    "react/forbid-prop-types": 0
     // "react/no-unused-prop-types": 0
-    // "react/forbid-prop-types": 0,
     // "react/require-default-props": 0,
     // "react/no-array-index-key": 0
   },

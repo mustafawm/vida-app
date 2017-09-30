@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 
-module.exports = {
+const config = {
   context: __dirname,
 
   entry: [
@@ -60,3 +60,13 @@ module.exports = {
     historyApiFallback: true
   }
 };
+
+if (process.env.NODE_ENV === 'production') {
+  config.entry = './js/ClientApp.jsx';
+  config.devtool = false;
+  config.plugins = [];
+} else if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV==='server') {
+  config.entry = './js/ClientApp.jsx';
+}
+
+module.exports = config;
